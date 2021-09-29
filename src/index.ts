@@ -1,9 +1,7 @@
-export {}
-
-const express = require ('express');
+const express = require('express');
 
 const app = express();
-const PORT: number = 3000;
+const PORT = 3000;
 
-
+let a = 20;
 
