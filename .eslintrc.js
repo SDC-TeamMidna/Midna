@@ -17,5 +17,5 @@ module.exports = {
   rules: {
     '@typescript-eslint/no-inferrable-types': 'off',
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', '@babel'],
 };
