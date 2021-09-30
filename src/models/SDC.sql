@@ -2,19 +2,21 @@
 CREATE TABLE reviews(
   id serial NOT NULL,
   rating integer,
-  reccomend bool,
+  recommend integer,
   response varchar,
+  reported bool,
   body varchar,
   date timestamptz NOT NULL,
   helpfulness integer,
   reviewer_name varchar NOT NULL,
   product_id integer NOT NULL,
   reviewer_email varchar NOT NULL,
+  summary varchar NOT NULL,
   PRIMARY KEY(id)
 );
 
 /* Table 'photos' */
-CREATE TABLE photos(
+CREATE TABLE reviews_photos(
   id serial NOT NULL,
   review_id integer NOT NULL,
   url varchar,
@@ -74,6 +76,18 @@ ALTER TABLE characteristic_reviews
     FOREIGN KEY (review_id) REFERENCES reviews (id);
 
 
+
+
+/*copy over data from .csv files into tables */
+
+copy product from '/Users/bishalgautam/Desktop/2021/Hack Reactor/SDC/product.csv' DELIMITER ',' CSV HEADER;
+copy characteristics (id, product_id, name) from '/Users/bishalgautam/Desktop/2021/Hack Reactor/SDC/characteristics.csv' DELIMITER ',' CSV HEADER;
+copy reviews (id, product_id, rating, date, summary, body, recommend, reported, reviewer_name, reviewer_email, response, helpfulness) from '/Users/bishalgautam/Desktop/2021/Hack Reactor/SDC/reviews.csv' DELIMITER ',' CSV HEADER;
+copy characteristic_reviews (id, characteristic_id, review_id, value) from '/Users/bishalgautam/Desktop/2021/Hack Reactor/SDC/characteristic_reviews.csv' DELIMITER ',' CSV HEADER;
+copy reviews_photos (id, review_id, url) from '/Users/bishalgautam/Desktop/2021/Hack Reactor/SDC/reviews_photos.csv' DELIMITER ',' CSV HEADER;
+
+
+/* change date timestamp format */
 ALTER TABLE reviews
 ALTER COLUMN date SET DATA TYPE timestamp with time zone
 USING
