@@ -36,7 +36,7 @@ CREATE TABLE characteristic_reviews(
   id serial NOT NULL,
   characteristic_id integer NOT NULL,
   review_id integer NOT NULL,
-  "value" character varying NOT NULL,
+  "value" integer NOT NULL,
   PRIMARY KEY(id)
 );
 

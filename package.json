@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watchAll",
-    "babel": "babel src/index.ts --out-file dist/bundle.js --watch",
-    "ts": "tsc --watch"
+    "build": "babel src/index.ts --out-file dist/index.js --watch",
+    "ts": "tsc --watch",
+    "start": "nodemon src/index.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,8 @@
   "homepage": "https://github.com/SDC-TeamMidna/Midna#readme",
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "pg": "^8.7.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.7",

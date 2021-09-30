@@ -1,4 +1,5 @@
 const express = require('express');
+const db = require('./models/postgres');
 
 const app = express();
 const PORT = 3000;
