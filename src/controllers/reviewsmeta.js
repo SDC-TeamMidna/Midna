@@ -1,0 +1,1 @@
+const { reviewsmeta } = require('../models/index');
