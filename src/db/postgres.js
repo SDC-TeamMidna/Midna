@@ -1,6 +1,6 @@
 const { Pool } = require('pg');
 
-const pool = new Pool({
+const db = new Pool({
   user: 'bishalgautam',
   host: 'localhost',
   database: 'sdcv2',
@@ -12,10 +12,10 @@ const pool = new Pool({
   idleTimeoutMillis: 0,
 });
 
-// //example query: keep pool running, don't pool.end() after every client query
+//example query: keep pool running, don't pool.end() after every client query
 // pool.query('SELECT * FROM public.reviews ORDER BY id ASC LIMIT 30', (err, res) => {
-//   // console.log(err, res);
+//   console.log(err, res);
 //   pool.end();
 // });
 
-module.exports = pool;
+module.exports = db;

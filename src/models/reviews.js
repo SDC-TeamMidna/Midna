@@ -3,12 +3,13 @@ const db = require('../db/postgres');
 module.exports = {
 
 //get reviews query
-
+  get: (params) => {
+    return db.query('SELECT * FROM public.reviews ORDER BY id ASC LIMIT 30');
+  },
 
 //post reviews query
 
 //return a promise
-
 
 };
 
@@ -23,3 +24,10 @@ module.exports = {
 //     callback(err, results);
 //   });
 // },
+
+
+//example query: keep pool running, don't pool.end() after every client query
+// pool.query('SELECT * FROM public.reviews ORDER BY id ASC LIMIT 30', (err, res) => {
+//   // console.log(err, res);
+//   pool.end();
+// });

@@ -1,7 +1,5 @@
 const router = require('express').Router();
-const controller = require('../controllers/index');
-
-//      /reviews/
+const controllers = require('../controllers/index');
 
 router.get('/', (req, res) => {
   const sortOptions = ['relevant', 'newest', 'helpful'];
@@ -15,9 +13,9 @@ router.get('/', (req, res) => {
   if (!req.query.product_id || !Number(req.query.product_id)) {
     res.status(422).send('Error: invalid product_id provided');
   } else {
-    //this calls on the db controller with the params
-    console.log(params);
-    res.send('reviews');
+    controllers.reviews.get(params)
+      .then((data) => res.json(data))
+      .catch((err) => console.log('error in get reviews request, router'));
   }
 });
 

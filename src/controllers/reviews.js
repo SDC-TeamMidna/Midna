@@ -1,8 +1,12 @@
-const { reviews } = require('../models/index');
+const models = require('../models/index');
 //require the models that return a promise of date from db
 
 module.exports = {
 
+    get: (params) => {
+      console.log(params, 'review models');
+      return models.reviews.get(params);
+    },
 
   };
 
