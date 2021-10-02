@@ -14,7 +14,10 @@ router.get('/', (req, res) => {
     res.status(422).send('Error: invalid product_id provided');
   } else {
     controllers.reviews.get(params)
-      .then((data) => res.json(data))
+      .then((data) => {
+        console.log(data);
+        res.json(data);
+      })
       .catch((err) => console.log('error in get reviews request, router'));
   }
 });

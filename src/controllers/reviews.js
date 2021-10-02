@@ -3,26 +3,17 @@ const models = require('../models/index');
 
 module.exports = {
 
-    get: (params) => {
-      console.log(params, 'review controller');
-      return models.reviews.get(params);
-    },
+  get: (params) => {
+    console.log(params, 'review controller');
+    const resFormat = {
+      product: '',
+      page: 0,
+      count: 5,
+      results: [],
+    };
+    return models.reviews.get(params)
+  },
 
-  };
+};
 
-
-
-
-  // get: function (req, res) {
-  //   models.messages.getAll(function(err, results) {
-  //     if (err) { /* do something */ }
-  //     res.json(results);
-  //   });
-  // },
-  // post: function (req, res) {
-  //   var params = [req.body.message, req.body.username, req.body.roomname];
-  //   models.messages.create(params, function(err, results) {
-  //     if (err) { /* do something */ }
-  //     res.sendStatus(201);
-  //   });
-  // }
+//convert model into the view

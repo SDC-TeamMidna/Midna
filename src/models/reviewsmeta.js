@@ -23,3 +23,19 @@ module.exports = {
 //     callback(err, results);
 //   });
 // },
+
+
+/*
+
+SELECT
+product.id,
+reviews.rating,
+COUNT(reviews.rating)
+FROM product
+INNER JOIN reviews
+ON product.id = reviews.product_id
+WHERE product.id = 2
+GROUP BY 1,2
+ORDER BY 1,2
+
+*/
