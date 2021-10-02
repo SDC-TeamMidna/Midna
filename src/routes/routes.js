@@ -15,10 +15,10 @@ router.get('/', (req, res) => {
   } else {
     controllers.reviews.get(params)
       .then((data) => {
-        console.log(data);
-        res.json(data);
+        console.log(data.rows);
+        res.json(data.rows);
       })
-      .catch((err) => console.log('error in get reviews request, router'));
+      .catch((err) => console.log('error in get reviews request, in router'));
   }
 });
 

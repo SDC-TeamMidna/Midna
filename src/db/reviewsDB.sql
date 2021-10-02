@@ -92,3 +92,7 @@ ALTER TABLE reviews
 ALTER COLUMN date SET DATA TYPE timestamp with time zone
 USING
 timestamp with time zone 'epoch' + date * interval '1 millisecond';
+
+/* create appropriate indexes */
+CREATE INDEX reviews_product_id_index ON reviews(product_id);
+CREATE INDEX reviews_photos_review_id_index ON reviews_photos(review_id);
