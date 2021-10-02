@@ -15,19 +15,25 @@ router.get('/', (req, res) => {
   } else {
     controllers.reviews.get(params)
       .then((data) => {
-        console.log(data.rows);
-        res.json(data.rows);
+        // console.log(data.rows);
+        res.json(data);
       })
-      .catch((err) => console.log('error in get reviews request, in router'));
+      .catch((err) => console.log(err.stack, 'error in get reviews request, in router'));
   }
 });
 
-// console.log(router);
-
-// router.get('/meta', (req, res) => {
-
-//   //success 200
-// });
+router.get('/meta', (req, res) => {
+  const productId = Number(req.query.product_id);
+  if (!productId) {
+    res.status(422).send('Error: invalid product_id provided');
+  }
+  controllers.reviewsmeta.getAllMetaData(productId)
+    .then((data) => {
+      console.log(data, 'in routes, metadata');
+      res.json(data);
+    })
+    .catch((err) => console.log(err.stack, 'err in meta fetch, router'));
+});
 
 // router.post('/', (req, res) => {
 

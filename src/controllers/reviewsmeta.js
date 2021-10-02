@@ -2,12 +2,15 @@ const { reviewsmeta } = require('../models/index');
 //require the models that return a promise of date from db
 
 module.exports = {
-
+  getAllMetaData: (productId) => {
+    console.log('reached reviewsmeta controller, getData');
+    return reviewsmeta.getAllMetaData(productId)
+      .then((data) => {
+        console.log(data[1].rows[0].recommended.false.length);
+      });
+  },
 
 };
-
-
-
 
 // get: function (req, res) {
 //   models.messages.getAll(function(err, results) {
