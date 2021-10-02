@@ -4,7 +4,7 @@ const controllers = require('../controllers/index');
 router.get('/', (req, res) => {
   const sortOptions = ['relevant', 'newest', 'helpful'];
   const params = {
-    page: Number(req.query.page) || 0,
+    page: Number(req.query.page) || 1,
     count: Number(req.query.count) || 5,
     sort: (sortOptions.includes(req.query.sort) ? req.query.sort : 'relevant'),
     product_id: Number(req.query.product_id),
