@@ -1,27 +1,15 @@
 const { reviewsmeta } = require('../models/index');
-//require the models that return a promise of date from db
 
 module.exports = {
-  getAllMetaData: (productId) => {
-    console.log('reached reviewsmeta controller, getData');
-    return reviewsmeta.getAllMetaData(productId)
-      .then((data) => {
-        console.log(data[1].rows[0].recommended.false.length);
-      });
-  },
+  getAllMetaData: (productId) => reviewsmeta.getAllMetaData(productId)
+    .then((data) => {
+      const response = {
+        product_id: productId.toString(),
+        ratings: data[0].rows[0].ratings,
+        recommended: data[1].rows[0].recommended,
+        characteristics: data[2].rows[0].characteristics,
+      };
+      return response;
+    }),
 
 };
-
-// get: function (req, res) {
-//   models.messages.getAll(function(err, results) {
-//     if (err) { /* do something */ }
-//     res.json(results);
-//   });
-// },
-// post: function (req, res) {
-//   var params = [req.body.message, req.body.username, req.body.roomname];
-//   models.messages.create(params, function(err, results) {
-//     if (err) { /* do something */ }
-//     res.sendStatus(201);
-//   });
-// }

@@ -2,9 +2,9 @@ const models = require('../models/index');
 
 module.exports = {
 
-  get: (params) => {
+  getAllReviews: (params) => {
     console.log(params, 'review controller');
-    return models.reviews.get(params)
+    return models.reviews.getAllReviews(params)
       .then((data) => {
         const result = {
           product: params.product_id,

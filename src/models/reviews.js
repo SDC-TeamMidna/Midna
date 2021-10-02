@@ -3,7 +3,7 @@ const db = require('../db/postgres');
 module.exports = {
 
   //get reviews query
-  get: (params) => {
+  getAllReviews: (params) => {
     const {
       page, count, sort, product_id
     } = params;

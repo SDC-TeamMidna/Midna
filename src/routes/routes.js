@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
   if (!req.query.product_id || !Number(req.query.product_id)) {
     res.status(422).send('Error: invalid product_id provided');
   } else {
-    controllers.reviews.get(params)
+    controllers.reviews.getAllReviews(params)
       .then((data) => {
         // console.log(data.rows);
         res.json(data);
@@ -29,16 +29,16 @@ router.get('/meta', (req, res) => {
   }
   controllers.reviewsmeta.getAllMetaData(productId)
     .then((data) => {
-      console.log(data, 'in routes, metadata');
       res.json(data);
     })
     .catch((err) => console.log(err.stack, 'err in meta fetch, router'));
 });
 
-// router.post('/', (req, res) => {
+router.post('/', (req, res) => {
 
-//     //success 201
-// });
+  res.send('post');
+    //success 201
+});
 
 // router.put('/:review_id/helpful', (req, res) => {
 //   //status 204 no content
