@@ -2,7 +2,6 @@ const db = require('../db/postgres');
 
 module.exports = {
 
-  //get reviews query
   getAllReviews: (params) => {
     const {
       page, count, sort, product_id
@@ -36,7 +35,19 @@ module.exports = {
     const query = `INSERT INTO
     reviews_photos (url, review_id)
     VALUES ${mapUrlsToSQL};`;
-    console.log(query);
+    return db.query(query);
+  },
+
+  postCharValues: (reviewId, characteristics) => {
+    const charEntries = Object.entries(characteristics);
+    const mapCharsToSQL = charEntries.map((char, index) => {
+      if (index === charEntries.length - 1) {
+        return `(${char[0]}, ${reviewId}, ${char[1]})`;
+      }
+      return `(${char[0]}, ${reviewId}, ${char[1]}), `;
+    }).join(' ');
+    const query = `INSERT into characteristic_reviews (characteristic_id, review_id, value)
+    VALUES ${mapCharsToSQL};`;
     return db.query(query);
   },
 
@@ -44,21 +55,20 @@ module.exports = {
     // console.log(inputData, 'models');
     const {
       product_id, rating, recommend,
-      body, name, email, summary, photos, characteristics
+      body, name, email, summary, photos, characteristics,
     } = inputData;
     const date = new Date().toISOString();
     const qparams = [rating, recommend, body, date, name, product_id, email, summary];
-    //if no insert will insert as null for field
     const query = `INSERT INTO reviews (rating, recommend, body, date, reviewer_name, product_id, reviewer_email, summary, reported)
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, false)
     RETURNING id`;
     return db.query(query, qparams)
       .then(({ rows }) => {
-        return module.exports.postURLs(rows[0].id, photos)
-      });
-      //for each url create a new row using the returned review_id
-
-    //do .then for photos urls and then for characteristics
+        const reviewId = rows[0].id;
+        module.exports.postURLs(reviewId, photos);
+        return reviewId;
+      })
+      .then((reviewId) => module.exports.postCharValues(reviewId, characteristics));
   },
 
 };

@@ -94,11 +94,13 @@ USING
 timestamp with time zone 'epoch' + date * interval '1 millisecond';
 
 /* create appropriate indexes */
-CREATE INDEX reviews_product_id_index ON reviews(product_id);
-CREATE INDEX reviews_photos_review_id_index ON reviews_photos(review_id);
-CREATE INDEX charReviews_char_id_index ON characteristic_reviews(characteristic_id);
+CREATE INDEX reviews_product_id_index ON reviews USING hash (product_id);
+CREATE INDEX reviews_photos_review_id_index ON reviews_photos USING hash (review_id);
+-- CREATE INDEX charReviews_char_id_index ON characteristic_reviews(characteristic_id);
+CREATE INDEX characteristic_reviews_review_id_index ON characteristic_reviews USING hash (review_id);
 
 
 /* fix asynchronized ids */
 SELECT SETVAL((SELECT PG_GET_SERIAL_SEQUENCE('reviews', 'id')), (SELECT (MAX(id) + 1) FROM reviews), FALSE);
 SELECT SETVAL((SELECT PG_GET_SERIAL_SEQUENCE('reviews_photos', 'id')), (SELECT (MAX(id) + 1) FROM reviews_photos), FALSE);
+SELECT SETVAL((SELECT PG_GET_SERIAL_SEQUENCE('characteristic_reviews', 'id')), (SELECT (MAX(id) + 1) FROM characteristic_reviews), FALSE);
