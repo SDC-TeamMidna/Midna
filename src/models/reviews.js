@@ -26,8 +26,20 @@ module.exports = {
     return db.query(query, qparams);
   },
 
-  //post reviews query
-  //new Date(), toISOString() or toValueOf() -> raw format
+  postURLs: (reviewId, photos) => {
+    const mapUrlsToSQL = photos.map((url, index) => {
+      if (index === photos.length - 1) {
+        return `('${url}', ${reviewId})`;
+      }
+      return `('${url}', ${reviewId}), `;
+    }).join(' ');
+    const query = `INSERT INTO
+    reviews_photos (url, review_id)
+    VALUES ${mapUrlsToSQL};`;
+    console.log(query);
+    return db.query(query);
+  },
+
   postAReview: (inputData) => {
     // console.log(inputData, 'models');
     const {
@@ -41,14 +53,13 @@ module.exports = {
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, false)
     RETURNING id`;
     return db.query(query, qparams)
-      .then((newId) => {
-        console.log(newId);
-        return newId;
+      .then(({ rows }) => {
+        return module.exports.postURLs(rows[0].id, photos)
       });
+      //for each url create a new row using the returned review_id
 
     //do .then for photos urls and then for characteristics
   },
-
 
 };
 

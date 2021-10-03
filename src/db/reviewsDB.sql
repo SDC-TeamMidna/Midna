@@ -97,3 +97,8 @@ timestamp with time zone 'epoch' + date * interval '1 millisecond';
 CREATE INDEX reviews_product_id_index ON reviews(product_id);
 CREATE INDEX reviews_photos_review_id_index ON reviews_photos(review_id);
 CREATE INDEX charReviews_char_id_index ON characteristic_reviews(characteristic_id);
+
+
+/* fix asynchronized ids */
+SELECT SETVAL((SELECT PG_GET_SERIAL_SEQUENCE('reviews', 'id')), (SELECT (MAX(id) + 1) FROM reviews), FALSE);
+SELECT SETVAL((SELECT PG_GET_SERIAL_SEQUENCE('reviews_photos', 'id')), (SELECT (MAX(id) + 1) FROM reviews_photos), FALSE);
