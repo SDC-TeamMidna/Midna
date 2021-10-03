@@ -27,6 +27,28 @@ module.exports = {
   },
 
   //post reviews query
+  //new Date(), toISOString() or toValueOf() -> raw format
+  postAReview: (inputData) => {
+    // console.log(inputData, 'models');
+    const {
+      product_id, rating, recommend,
+      body, name, email, summary, photos, characteristics
+    } = inputData;
+    const date = new Date().toISOString();
+    const qparams = [rating, recommend, body, date, name, product_id, email, summary];
+    //if no insert will insert as null for field
+    const query = `INSERT INTO reviews (rating, recommend, body, date, reviewer_name, product_id, reviewer_email, summary, reported)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, false)
+    RETURNING id`;
+    return db.query(query, qparams)
+      .then((newId) => {
+        console.log(newId);
+        return newId;
+      });
+
+    //do .then for photos urls and then for characteristics
+  },
+
 
 };
 

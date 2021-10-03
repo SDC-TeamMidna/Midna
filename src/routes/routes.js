@@ -26,18 +26,23 @@ router.get('/meta', (req, res) => {
   const productId = Number(req.query.product_id);
   if (!productId) {
     res.status(422).send('Error: invalid product_id provided');
+  } else {
+    controllers.reviewsmeta.getAllMetaData(productId)
+      .then((data) => {
+        res.json(data);
+      })
+      .catch((err) => console.log(err.stack, 'err in meta fetch, router'));
   }
-  controllers.reviewsmeta.getAllMetaData(productId)
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => console.log(err.stack, 'err in meta fetch, router'));
 });
 
 router.post('/', (req, res) => {
-
-  res.send('post');
-    //success 201
+  if (!req.body) {
+    res.status(422).send('Error: Review body contains invalid entries');
+  } else {
+    controllers.reviews.postAReview(req.body)
+      .then(() => res.status(201).send('Created'))
+      .catch((err) => console.log(err.stack, 'err in post route, router'));
+  }
 });
 
 // router.put('/:review_id/helpful', (req, res) => {
