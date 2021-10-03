@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
         // console.log(data.rows);
         res.json(data);
       })
-      .catch((err) => console.log(err.stack, 'error in get reviews request, in router'));
+      .catch(() => res.status(500).send('An error occurred. If this error persists, contact your instruction team.'));
   }
 });
 
@@ -31,7 +31,7 @@ router.get('/meta', (req, res) => {
       .then((data) => {
         res.json(data);
       })
-      .catch((err) => console.log(err.stack, 'err in meta fetch, router'));
+      .catch(() => res.status(500).send('An error occurred. If this error persists, contact your instruction team.'));
   }
 });
 
@@ -41,15 +41,27 @@ router.post('/', (req, res) => {
   } else {
     controllers.reviews.postAReview(req.body)
       .then(() => res.status(201).send('Created'))
-      .catch((err) => console.log(err.stack, 'err in post route, router'));
+      .catch(() => res.status(500).send('An error occurred. If this error persists, contact your instruction team.'));
   }
 });
 
-// router.put('/:review_id/helpful', (req, res) => {
-//   //status 204 no content
-// });
+router.put('/:review_id/helpful', (req, res) => {
+  const reviewId = req.params.review_id;
+  controllers.reviews.updateHelpful(reviewId)
+    .then(() => {
+      res.status(201).send(`Updated review ${reviewId} as helpful`);
+    })
+    .catch(() => res.status(500).send('An error occurred. If this error persists, contact your instruction team.'));
+});
 
-// router.put('/:review_id/report', (req, res) => {
-//   //status 204 no content
-// });
+router.put('/:review_id/report', (req, res) => {
+  const reviewId = req.params.review_id;
+  controllers.reviews.reportReview(reviewId)
+    .then(({rows}) => {
+      console.log(rows);
+      res.status(201).send(`Reported review ${reviewId}.`);
+    })
+    .catch(() => res.status(500).send('An error occurred. If this error persists, contact your instruction team.'));
+});
+
 module.exports = router;

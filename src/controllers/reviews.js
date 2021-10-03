@@ -13,10 +13,11 @@ module.exports = {
       return result;
     }),
 
-  postAReview: (inputData) => {
-    console.log('post controllers');
-    return models.reviews.postAReview(inputData);
-  },
+  postAReview: (inputData) => models.reviews.postAReview(inputData),
+
+  updateHelpful: (reviewId) => models.reviews.updateHelpful(reviewId),
+
+  reportReview: (reviewId) => models.reviews.reportReview(reviewId),
 
 };
 

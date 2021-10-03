@@ -71,21 +71,25 @@ module.exports = {
       .then((reviewId) => module.exports.postCharValues(reviewId, characteristics));
   },
 
+  updateHelpful: (reviewId) => {
+    const query = `UPDATE reviews
+    SET "helpfulness" = CASE
+    WHEN helpfulness IS NULL THEN 0
+    ELSE helpfulness + 1
+    END
+    WHERE
+    id = ${reviewId}
+    RETURNING helpfulness`;
+    return db.query(query);
+  },
+
+  reportReview: (reviewId) => {
+    const query = `UPDATE reviews
+    SET "reported" = true
+    WHERE
+    id = ${reviewId}
+    RETURNING reported`;
+    return db.query(query);
+  },
+
 };
-
-// COALESCE(JSON_AGG(json_build_object('id', reviews_photos.id, 'url', reviews_photos.url)
-// ORDER BY reviews_photos.id ASC) FILTER (WHERE reviews_photos.url IS NOT NULL), '[]') as photos
-
-// SELECT * FROM (SELECT reviews.id
-//   as review_id, rating, summary, recommend,
-//   CASE WHEN reviews.response = 'null' THEN NULL ELSE reviews.response END as response,
-//   body, date, reviewer_name, helpfulness,
-//   COALESCE(JSON_AGG(json_build_object('id', reviews_photos.id, 'url', reviews_photos.url)
-//   ORDER BY reviews_photos.id ASC) FILTER (WHERE reviews_photos.url IS NOT NULL), '[]') as photos
-//   FROM public.reviews LEFT JOIN public.reviews_photos
-//   ON reviews.id = reviews_photos.review_id
-//   WHERE product_id=40355
-//   GROUP BY reviews.id
-//   OFFSET 3 ROWS
-//   FETCH FIRST 3 ROWS ONLY) AS data
-//   ORDER BY data.helpfulness DESC
