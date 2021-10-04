@@ -1,11 +1,13 @@
+const path = require('path');
 const { Pool } = require('pg');
+require('dotenv').config({ path: path.join(__dirname, '../config/.env') });
 
 const db = new Pool({
-  user: 'bishalgautam',
-  host: 'localhost',
-  database: 'sdcv2',
+  user: process.env.USER,
+  host: process.env.DB_HOST || 'localhost',
+  database: process.env.DB || 'postgres',
   password: '',
-  port: 5432,
+  port: process.env.DB_PORT,
   max: 20,
   idleTimeoutMillis: 0,
 });
