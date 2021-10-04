@@ -57,8 +57,7 @@ router.put('/:review_id/helpful', (req, res) => {
 router.put('/:review_id/report', (req, res) => {
   const reviewId = req.params.review_id;
   controllers.reviews.reportReview(reviewId)
-    .then(({rows}) => {
-      console.log(rows);
+    .then(() => {
       res.status(201).send(`Reported review ${reviewId}.`);
     })
     .catch(() => res.status(500).send('An error occurred. If this error persists, contact your instruction team.'));

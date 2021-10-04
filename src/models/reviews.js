@@ -74,7 +74,7 @@ module.exports = {
   updateHelpful: (reviewId) => {
     const query = `UPDATE reviews
     SET "helpfulness" = CASE
-    WHEN helpfulness IS NULL THEN 0
+    WHEN helpfulness IS NULL THEN 1
     ELSE helpfulness + 1
     END
     WHERE
