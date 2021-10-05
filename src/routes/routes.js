@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
   } else {
     controllers.reviews.getAllReviews(params)
       .then((data) => {
-        // console.log(data.rows);
+        console.log(data.rows);
         res.json(data);
       })
       .catch((err) => res.json(err));
