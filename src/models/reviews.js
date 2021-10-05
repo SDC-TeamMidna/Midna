@@ -16,7 +16,7 @@ module.exports = {
     date, reviewer_name, helpfulness,
     COALESCE(JSON_AGG(json_build_object('id', reviews_photos.id, 'url', reviews_photos.url)
     ORDER BY reviews_photos.id ASC) FILTER (WHERE reviews_photos.url IS NOT NULL), '[]') as photos
-    FROM public.reviews LEFT JOIN public.reviews_photos ON reviews.id = reviews_photos.review_id
+    FROM reviews LEFT JOIN reviews_photos ON reviews.id = reviews_photos.review_id
     WHERE product_id=$1
     GROUP BY reviews.id
     ORDER BY ${qsort} DESC

@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
         // console.log(data.rows);
         res.json(data);
       })
-      .catch(() => res.status(500).send('An error occurred. If this error persists, contact your instruction team.'));
+      .catch((err) => res.json(err));
   }
 });
 
