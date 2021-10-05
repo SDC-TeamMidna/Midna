@@ -104,6 +104,11 @@ CREATE INDEX reviews_photos_review_id_index ON reviews_photos USING hash (review
 -- CREATE INDEX charReviews_char_id_index ON characteristic_reviews(characteristic_id);
 CREATE INDEX characteristic_reviews_review_id_index ON characteristic_reviews USING hash (review_id);
 
+CREATE INDEX reviews_id_index ON reviews USING hash (id);
+CREATE INDEX reviews_photos_id_index ON reviews_photos USING hash (id);
+-- CREATE INDEX charReviews_char_id_index ON characteristic_reviews(characteristic_id);
+CREATE INDEX characteristic_reviews_id_index ON characteristic_reviews USING hash (id);
+
 
 /* fix asynchronized ids */
 SELECT SETVAL((SELECT PG_GET_SERIAL_SEQUENCE('reviews', 'id')), (SELECT (MAX(id) + 1) FROM reviews), FALSE);

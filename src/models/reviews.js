@@ -65,10 +65,10 @@ module.exports = {
     return db.query(query, qparams)
       .then(({ rows }) => {
         const reviewId = rows[0].id;
-        module.exports.postURLs(reviewId, photos);
-        return reviewId;
-      })
-      .then((reviewId) => module.exports.postCharValues(reviewId, characteristics));
+        const postURLChar = [module.exports.postURLs(reviewId, photos),
+          module.exports.postCharValues(reviewId, characteristics)];
+        return Promise.all(postURLChar);
+      });
   },
 
   updateHelpful: (reviewId) => {

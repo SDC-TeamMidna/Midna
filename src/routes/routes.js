@@ -38,7 +38,9 @@ router.get('/meta', (req, res) => {
 router.post('/', (req, res) => {
   if (!req.body) {
     res.status(422).send('Error: Review body contains invalid entries');
+    console.log('no body');
   } else {
+    console.log(req.body, 'body');
     controllers.reviews.postAReview(req.body)
       .then(() => res.status(201).send('Created'))
       .catch(() => res.status(500).send('An error occurred. If this error persists, contact your instruction team.'));

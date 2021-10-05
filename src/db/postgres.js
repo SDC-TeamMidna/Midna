@@ -11,6 +11,6 @@ const db = new Pool({
   idleTimeoutMillis: 0,
 });
 
-console.log(db);
+// console.log(db);
 
 module.exports = db;
