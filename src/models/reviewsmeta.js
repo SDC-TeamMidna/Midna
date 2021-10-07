@@ -2,54 +2,92 @@ const db = require('../db/postgres');
 
 module.exports = {
 
-  getReviewMetaRatings: (productId) => {
-    const psqlQuery = `SELECT
-    json_object_agg(
-      to_char(results.rating, 'FM9'),
-      to_char(results.count, 'FM9')) AS ratings
-    FROM
-    (SELECT reviews.rating,
-    COUNT(*)
-    FROM reviews
-    WHERE product_id = ${productId}
-    GROUP BY 1
-    ORDER BY 1) results
-    `;
-    return db.query(psqlQuery);
-  },
+  // getReviewMetaRatings: (productId) => {
+  //   const psqlQuery = `SELECT
+  //   json_object_agg(
+  //     to_char(results.rating, 'FM9'),
+  //     to_char(results.count, 'FM9')) AS ratings
+  //   FROM
+  //   (SELECT reviews.rating,
+  //   COUNT(*)
+  //   FROM reviews
+  //   WHERE product_id = ${productId}
+  //   GROUP BY 1
+  //   ORDER BY 1) results
+  //   `;
+  //   return db.query(psqlQuery);
+  // },
 
-  getReviewMetaRecs: (productId) => {
-    const psqlQuery = `SELECT
-    json_build_object(
-    'false', to_char(SUM(CASE WHEN "recommend" = false THEN 1 ELSE 0 END), 'FM9'),
-    'true', to_char(SUM(CASE WHEN "recommend" = true THEN 1 ELSE 0 END), 'FM9')
-    ) AS recommended
-    FROM reviews
-    WHERE reviews.product_id = ${productId}
-    GROUP BY reviews.product_id
-    `;
-    return db.query(psqlQuery);
-  },
+  // getReviewMetaRecs: (productId) => {
+  //   const psqlQuery = `SELECT
+  //   json_build_object(
+  //   'false', to_char(SUM(CASE WHEN "recommend" = false THEN 1 ELSE 0 END), 'FM9'),
+  //   'true', to_char(SUM(CASE WHEN "recommend" = true THEN 1 ELSE 0 END), 'FM9')
+  //   ) AS recommended
+  //   FROM reviews
+  //   WHERE reviews.product_id = ${productId}
+  //   GROUP BY reviews.product_id
+  //   `;
+  //   return db.query(psqlQuery);
+  // },
 
-  getReviewMetaChar: (productId) => {
-    const psqlQuery = `SELECT json_object_agg(results.name, results.json_build_object) AS characteristics FROM
+  // getReviewMetaChar: (productId) => {
+  //   const psqlQuery = `SELECT json_object_agg(results.name, results.json_build_object) AS characteristics FROM
+  //   (SELECT
+  //   characteristics.product_id as product_id,
+  //   characteristics.name,
+  //   json_build_object('id', characteristics.id, 'value', to_char(AVG(characteristic_reviews.value), 'FM9.000000009'))
+  //   FROM characteristics
+  //   INNER JOIN characteristic_reviews
+  //   ON characteristics.id = characteristic_reviews.characteristic_id
+  //   WHERE characteristics.product_id = ${productId}
+  //   GROUP BY
+  //   characteristics.product_id,
+  //   characteristics.id) results
+  //   `;
+  //   return db.query(psqlQuery);
+  // },
+
+  // getAllMetaData: (productId) => Promise.all([module.exports.getReviewMetaRatings(productId),
+  //   module.exports.getReviewMetaRecs(productId), module.exports.getReviewMetaChar(productId)]),
+  getAllMetaData: (productId) => {
+    const psqlQuery = `SELECT json_object_agg(results.name, results.json_build_object) from
     (SELECT
-    characteristics.product_id as product_id,
+    product.id as product_id,
     characteristics.name,
-    json_build_object('id', characteristics.id, 'value', to_char(AVG(characteristic_reviews.value), 'FM9.000000009'))
-    FROM characteristics
+    json_build_object('id', characteristics.id, 'value', sum(characteristic_reviews.value)::float8 / count(characteristic_reviews.value)::float8)
+    FROM product
+    INNER JOIN characteristics
+    ON product.id = characteristics.product_id
     INNER JOIN characteristic_reviews
     ON characteristics.id = characteristic_reviews.characteristic_id
-    WHERE characteristics.product_id = ${productId}
+    WHERE product.id = ${productId}
     GROUP BY
-    characteristics.product_id,
+    product.id,
     characteristics.id) results
-    `;
+    UNION ALL
+    SELECT
+        json_object_agg(
+          to_char(results.rating, 'FM9'),
+          to_char(results.count, 'FM9')) AS ratings
+        FROM
+        (SELECT reviews.rating,
+        COUNT(*)
+        FROM reviews
+        WHERE product_id = ${productId}
+        GROUP BY 1
+        ORDER BY 1) results
+    UNION ALL
+    SELECT
+        json_build_object(
+        'false', to_char(SUM(CASE WHEN "recommend" = false THEN 1 ELSE 0 END), 'FM9'),
+        'true', to_char(SUM(CASE WHEN "recommend" = true THEN 1 ELSE 0 END), 'FM9')
+        ) AS recommended
+        FROM reviews
+        WHERE reviews.product_id = ${productId}
+        GROUP BY reviews.product_id`;
     return db.query(psqlQuery);
   },
-
-  getAllMetaData: (productId) => Promise.all([module.exports.getReviewMetaRatings(productId),
-    module.exports.getReviewMetaRecs(productId), module.exports.getReviewMetaChar(productId)]),
 
 };
 

@@ -4,10 +4,8 @@ require('dotenv').config({ path: path.join(__dirname, '../config/.env') });
 
 const db = new Pool({
   user: process.env.DB_USER,
-  host: 'db',
-  database: process.env.DB,
-  password: process.env.DB_PASS,
-  max: 20,
+  host: 'localhost',
+  database: 'sdcv2' || process.env.DB,
   idleTimeoutMillis: 0,
 });
 

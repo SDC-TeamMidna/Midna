@@ -15,7 +15,6 @@ router.get('/', (req, res) => {
   } else {
     controllers.reviews.getAllReviews(params)
       .then((data) => {
-        console.log(data.rows);
         res.json(data);
       })
       .catch((err) => res.json(err));
@@ -29,6 +28,7 @@ router.get('/meta', (req, res) => {
   } else {
     controllers.reviewsmeta.getAllMetaData(productId)
       .then((data) => {
+        console.log(data);
         res.json(data);
       })
       .catch(() => res.status(500).send('An error occurred. If this error persists, contact your instruction team.'));
