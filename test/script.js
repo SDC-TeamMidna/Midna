@@ -4,7 +4,7 @@ import { sleep, check } from 'k6';
 
 export default function () {
   const id = Math.floor(Math.random() + 100000 + 900000);
-  const domain = `http://localhost:8000/reviews/meta?product_id=${id}`;
+  const domain = `http://localhost:3000/reviews/meta?product_id=${id}`;
 
   const reviews = http.get(domain);
   check(reviews, {
