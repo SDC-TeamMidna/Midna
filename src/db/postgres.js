@@ -11,11 +11,10 @@ require('dotenv').config({ path: path.join(__dirname, '../config/.env') });
 
 // docker
 const db = new Pool({
-  user: process.env.DB_USER,
+  user: 'ubuntu',
   host: 'db',
-  database: process.env.DB,
-  password: process.env.DB_PASS,
-  idleTimeoutMillis: 0,
+  database: 'sdcv2',
+  password: 'password',
 });
 
 // console.log(db);
