@@ -12,6 +12,10 @@ app.use(express.json());
 
 app.use('/reviews', router);
 
+// app.get('/loaderio-3adea258eed4ca8f25ef44aa0c3ced52', (req, res) => {
+//   res.send('loaderio-3adea258eed4ca8f25ef44aa0c3ced52');
+// });
+
 app.listen(PORT, () => {
   console.log('app is running on PORT', PORT);
 });
