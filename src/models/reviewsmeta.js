@@ -80,8 +80,8 @@ module.exports = {
     UNION ALL
     SELECT
         json_build_object(
-        'false', to_char(SUM(CASE WHEN "recommend" = false THEN 1 ELSE 0 END), 'FM9'),
-        'true', to_char(SUM(CASE WHEN "recommend" = true THEN 1 ELSE 0 END), 'FM9')
+        'false', to_char(SUM(CASE WHEN "recommend" = false THEN 1 ELSE 0 END), 'FM999999'),
+        'true', to_char(SUM(CASE WHEN "recommend" = true THEN 1 ELSE 0 END), 'FM9999999')
         ) AS recommended
         FROM reviews
         WHERE reviews.product_id = ${productId}
