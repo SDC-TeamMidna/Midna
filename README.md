@@ -12,6 +12,8 @@ Developed by [Bishal Gautam](https://github.com/bishalkg)
 
 A microservice RESTful API for an ecommerce web app [Toph Clothing Co.](https://github.com/hr-rfp55-toph-FEC/Project-Catwalk). The other microservices are located here: [MidnaMicroservices](https://github.com/SDC-TeamMidna)
 
+The system was deployed onto several AWS EC2 instances, with an Nginx load balancer for 3 node servers, all quering one postgres database.
+
 The goal of this project was to redesign the back end API service for an e-commerce web app, transforming it from a monolothic to a horizontally scalable, microservices based system architecture.
 
 The metrics to achieve were:
