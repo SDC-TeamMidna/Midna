@@ -1,4 +1,4 @@
-# Project Catwalk Reviews API
+# Toph Clothing Co. Reviews API
 
 ![Express](https://img.shields.io/badge/-Express-20232A?style=for-the-badge&logo=express&logoColor=yellow)
 ![postgresql](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
