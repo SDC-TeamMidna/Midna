@@ -7,7 +7,6 @@
 ![AWS](https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)
 ![Loader.io](https://loader.io/)
 
-
 Developed by [Bishal Gautam](https://github.com/bishalkg)
 
 A microservice RESTful API for an ecommerce web app [Toph Clothing Co.](https://github.com/hr-rfp55-toph-FEC/Project-Catwalk). The other microservices are located here: [MidnaMicroservices](https://github.com/SDC-TeamMidna)
@@ -24,6 +23,9 @@ The metrics achieved were:
   - query speeds, per endpoint of < 10ms
   - 4000 requests per second, maintaining 100ms response times and error rate of 1%
 
+Here is the schema that I created:
+
+<img width="892" alt="Screen Shot 2021-11-22 at 2 47 20 PM" src="https://user-images.githubusercontent.com/84740259/142946712-45b5fe91-fca6-4da3-be33-f0e602c8a943.png">
 
 ### Installation
 ```
