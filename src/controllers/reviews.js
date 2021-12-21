@@ -20,5 +20,3 @@ module.exports = {
   reportReview: (reviewId) => models.reviews.reportReview(reviewId),
 
 };
-
-//convert model into the view
