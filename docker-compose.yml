@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.8'
 
 services:
   db:
@@ -8,29 +8,32 @@ services:
     volumes:
       - ./dbdump:/docker-entrypoint-initdb.d
     environment:
-      POSTGRES_PASSWORD: password123
+      POSTGRES_PASSWORD: 'password123'
       POSTGRES_USER: 'bishalgautam'
-  server:
+  node_server:
     build:
       dockerfile: Dockerfile
+    environment:
+      POSTGRES_PASSWORD: 'password123'
+      POSTGRES_USER: 'bishalgautam'
     restart: unless-stopped
-    expose:
-      - '3000'
+    # expose:
+    #   - '3000'
     depends_on:
       - db
   proxy:
     image: nginx:alpine
-    # build:
-    #   dockerfile: Dockerfile.nginx
     ports:
       - '80:80'
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
-      - server
+      - node_server
 
 
 
+
+# For Swarm
     # build:
     #   context: .
     #   dockerfile: Dockerfile.nginx

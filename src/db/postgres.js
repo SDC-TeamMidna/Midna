@@ -11,11 +11,11 @@ require('dotenv').config({ path: path.join(__dirname, '../config/.env') });
 
 // docker
 const db = new Pool({
-  user: process.env.DB_USER,
+  user: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
   host: 'db',
   database: process.env.DB,
-  password: process.env.DB_PASS,
-  idleTimeoutMillis: 0,
+  port: 5432,
 });
 
 // console.log(db);

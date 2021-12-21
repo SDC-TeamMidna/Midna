@@ -28,6 +28,7 @@ router.get('/meta', (req, res) => {
   } else {
     controllers.reviewsmeta.getAllMetaData(productId)
       .then((data) => {
+        console.log(POSTGRES_USER);
         res.json(data);
       })
       .catch(() => res.status(500).send('An error occurred. If this error persists, contact your instruction team.'));

@@ -3,8 +3,8 @@ import http from 'k6/http';
 import { sleep, check } from 'k6';
 
 export default function () {
-  const id = Math.floor(Math.random() + 100000 + 900000);
-  const domain = `http://localhost:3000/reviews/meta?product_id=${id}`;
+  const id = Math.floor(Math.random() * 100000);
+  const domain = `http://localhost/reviews/?product_id=${id}`;
 
   const reviews = http.get(domain);
   check(reviews, {
