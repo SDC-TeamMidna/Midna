@@ -10,7 +10,7 @@ module.exports = {
     const qsort = sortOptions[sort];
     const qpage = (page - 1) * count;
     const qparams = [product_id, count, qpage];
-    // console.log(qparams, 'sort params');
+
     const query = `SELECT reviews.id as review_id, rating, summary, recommend,
     CASE WHEN reviews.response = 'null' THEN NULL ELSE reviews.response END as response, body,
     date, reviewer_name, helpfulness,
@@ -52,7 +52,6 @@ module.exports = {
   },
 
   postAReview: (inputData) => {
-    // console.log(inputData, 'models');
     const {
       product_id, rating, recommend,
       body, name, email, summary, photos, characteristics,

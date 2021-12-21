@@ -20,8 +20,6 @@ services:
       - db
   proxy:
     image: nginx:alpine
-    # build:
-    #   dockerfile: Dockerfile.nginx
     ports:
       - '80:80'
     volumes:
@@ -29,32 +27,3 @@ services:
     depends_on:
       - server
 
-
-
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile.nginx
-    # deploy:
-    #   replicas: 2
-    #   restart_policy:
-    #     max_attempts: 3
-    #     condition: on-failure
-    #   update_config:
-    #     parallelism: 3
-    #     delay: 10s
-
-
-    #   proxy:
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile.nginx
-    # image: nginx_proxy:v1
-    # ports:
-    #   - 80:80
-    # depends_on:
-    #   - nodeapp
-    # deploy:
-    #   placement:
-    #     constraints: [node.role == manager]
-    # depends_on:
-    #   - server
